@@ -1,0 +1,105 @@
+.error-login{
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 70%;
+    color: #dc3545;
+}
+
+
+
+.err_xls_cell {
+    border: 2px solid red !important;
+}
+
+.xlsinvModal .modal-header {
+    background: #3b97ff;
+    color: #FFF;
+    font-weight: 700 !important;
+    /* //box-shadow: 0px 0px 25px #3787d5; */
+    padding: 6px 15px;
+}
+
+.xlsinvModal .modal-content {
+    background-color: #f6f6f6;
+}
+
+.xlsinvModal .modal-body {
+    padding: 12px;
+    padding-bottom: 0px;
+}
+
+.xlsinvModal .responsemsg {
+    text-align: center;
+    font-size: 1.3em;
+    color: #038959;
+    font-weight: 600;
+}
+
+.xlsinvModal .modal-footer {
+    padding: 4px;
+}
+
+.xls_cell_err_msg {
+    text-align: center;
+    color: red;
+    font-weight: 600;
+    font-size: 1.1em;
+    font-family: verdana;
+}
+.nonclick {
+    pointer-events: none;
+}
+
+.custom_loader {
+    width: 33%;
+    margin: 0 auto;
+    margin-top: 2%;
+}
+
+.loading-text {
+    font-size: 16px !important;
+    font-family: verdana;
+    color: #10a0e3;
+    text-align: center;
+}
+
+.loader_spinner {
+    /* border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 11px solid #398cea;
+  border-right: 11px solid #34b382;
+  border-bottom: 11px solid #d1b90c;
+  width: 65px;
+  height: 65px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin: 0 auto; */
+    border: 10px solid #f2f2f2;
+    border-radius: 50%;
+    border-top: 10px solid #33a4f8;
+    border-right: 10px solid #97ccf9;
+    border-bottom: 10px solid #33a4f8;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

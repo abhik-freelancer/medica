@@ -83,3 +83,51 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+define('EMPLOYEE_STATUS',serialize(array(
+	'Active'=>'Active','Resign'=>'Resign',
+	'Transfer'=>'Transfer'
+	)));
+
+define('USER_TYPE',serialize(array(
+	'Admin'=>'Admin','HR'=>'HR',
+	'IC'=>'IC'
+	)));
+
+
+
+defined('DEPARTMENT_DUPLICATE_MSG') OR define('DEPARTMENT_DUPLICATE_MSG', '<div class="alert alert-danger alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Department</strong> already exist.
+</div>');
+
+defined('EMPCODE_DUPLICATE_MSG') OR define('EMPCODE_DUPLICATE_MSG', '<div class="alert alert-danger alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Employee code</strong> already exist.
+</div>');
+
+defined('VACCINE_DUPLICATE_MSG') OR define('VACCINE_DUPLICATE_MSG', '<div class="alert alert-danger alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Vaccine name</strong> already exist.
+</div>');
+
+
+
+//DEPARTMENT_INSRT_ERROR
+defined('INSRT_ERROR') OR define('INSRT_ERROR', '<div class="alert alert-danger alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Error</strong> in insertion.
+</div>');
+
+
+defined('UPDATE_ERROR') OR define('UPDATE_ERROR', '<div class="alert alert-danger alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Error</strong> in update.
+</div>');
+
+defined('LOGIN_DUPLICATE_MSG') OR define('LOGIN_DUPLICATE_MSG', '<div class="alert alert-danger alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Login name</strong> already exist.
+</div>');
+
+
