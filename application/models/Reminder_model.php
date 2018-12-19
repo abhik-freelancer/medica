@@ -21,6 +21,7 @@ class Reminder_model extends CI_Model{
                 DATE_FORMAT(employee_vaccination_detail.actual_given_date,'%d-%m-%Y') AS actual_given_date,
                 department_master.department_name,
                 employee_vaccination_detail.employee_id,employee_vaccination_detail.department_id,
+                employee_vaccination_detail.vaccination_id,
                 employee_vaccination_detail.is_given
                 
                 FROM 
@@ -44,13 +45,109 @@ class Reminder_model extends CI_Model{
                 
     }
     
+    
     public function updateschdl($data){
-        
         $employee_vaccine_id = $data["employe_vaccine_id"];
-        $update_arr = [
-            "actual_given_date" =>$data["actual_given_date"]
+        $isGiven='N';
+        if($data["actual_given_date"]!=""){$isGiven='Y';}
+         try {
+            $this->db->trans_begin();
+             $update_arr = [
+            "actual_given_date" =>$data["actual_given_date"],
+            "is_given"=>$isGiven
         ];
         $this->db->where("employe_vaccine_id",$employee_vaccine_id);
-        $this->db->update("");
+        $this->db->update("employee_vaccination_detail",$update_arr);
+            
+         $childVaccine = $this->getChildFrequencyAndId($data['vaccination_id']);
+        if($childVaccine!=""){
+            //get next schedule date
+            $childScheduleDate = $this->getScheduleDate($childVaccine->frequency, $data["actual_given_date"]);
+            $insertArray=[
+                'employee_id'=>$data['employee_id'],
+                'department_id'=>$data['department_id'],
+                'vaccination_id'=>$childVaccine->id,
+                'schedule_date'=>$childScheduleDate,
+                'actual_given_date'=>NULL,
+                'is_given'=>'N',
+                'parent_vaccineId'=>$data['vaccination_id'],
+                'hospital_id'=>$data['hospitalId']
+                
+            ];
+            $this->db->insert("employee_vaccination_detail",$insertArray);
+            
+            //create next vaccine schedule...
+            
+        }    
+            
+            
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                return false;
+            } else {
+                $this->db->trans_commit();
+                return true;
+            }
+         } catch (Exception $ex){
+             return false;
+         }
+        
+    }
+    
+//    public function updateschdl($data){
+//        
+//        $employee_vaccine_id = $data["employe_vaccine_id"];
+//        $isGiven='N';
+//        if($data["actual_given_date"]!=""){$isGiven='Y';}
+//        
+//        $update_arr = [
+//            "actual_given_date" =>$data["actual_given_date"],
+//            "is_given"=>$isGiven
+//        ];
+//        $this->db->where("employe_vaccine_id",$employee_vaccine_id);
+//        $this->db->update("employee_vaccination_detail",$update_arr);
+//        
+//        $childVaccine = $this->getChildFrequencyAndId($data['vaccination_id']);
+//        if($childVaccine!=""){
+//            //get next schedule date
+//            $childScheduleDate = $this->getScheduleDate($childVaccine->frequency, $data["actual_given_date"]);
+//            $insertArray=[
+//                'employee_id'=>$data['employee_id'],
+//                'department_id'=>$data['department_id'],
+//                'vaccination_id'=>$childVaccine->id,
+//                'schedule_date'=>$childScheduleDate,
+//                'actual_given_date'=>NULL,
+//                'is_given'=>'N',
+//                'parent_vaccineId'=>$data['vaccination_id'],
+//                'hospital_id'=>$data['hospitalId']
+//                
+//            ];
+//            $this->db->insert("employee_vaccination_detail",$insertArray);
+//            
+//            //create next vaccine schedule...
+//            
+//        }
+//        
+//    }
+    
+    public function getChildFrequencyAndId($vaccineId){
+        $childVaccine ="";
+        $query = $this->db->select("vaccine.*")
+                ->from("vaccine")
+                ->where("vaccine.parent_vaccine",$vaccineId)->get();
+                if($query->num_rows()>0){
+                    $childVaccine = $query->row();
+                }
+        return $childVaccine;        
+    }
+    
+    public function getScheduleDate($frequency,$givenDate){
+        //Y-m-d;
+//        $Date = "2010-09-17";
+//echo date('Y-m-d', strtotime($Date. ' + 1 days'));
+//echo date('Y-m-d', strtotime($Date. ' + 2 days'));
+        
+         $schedule = date('Y-m-d',strtotime($givenDate." +".($frequency)." days"));
+        return $schedule;
     }
 }

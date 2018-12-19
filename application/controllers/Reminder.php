@@ -54,22 +54,38 @@ class Reminder extends CI_Controller{
             $employe_vaccine_id  = $this->input->post("employee_vaccince_schid");
             $employee_id = $this->input->post("employee_id");
             $department_id= $this->input->post("department_id");
-            $actual_given_date = $this->input->post("givendate");
+            $actual_given_date = ($this->input->post("givendate")==""?NULL:date('Y-m-d', strtotime($this->input->post("givendate"))));
+            $vaccineid = $this->input->post("vaccineid");
             
             $data =[
                 "employee_id"=>$employee_id,
                 "is_given"=>$actual_given_date,
                 "department_id"=>$department_id,
                 "employe_vaccine_id"=>$employe_vaccine_id,
-                "actual_given_date"=>$actual_given_date
+                "actual_given_date"=>$actual_given_date,
+                "vaccination_id"=>$vaccineid,
+                "hospitalId"=>$this->session->user_data['hospitalid']
                     
             ];
-            $this->remindermodel->updateschdl($data);
-            
-            
+           $updateStatus= $this->remindermodel->updateschdl($data);
+           
+           if($updateStatus){
+               $responseData = ["code"=>1,"msg"=>"Row update successfully"];
+               
+           }else{
+               $responseData = ["code"=>0,"msg"=>"Updation fail"];
+           }
+           
+           
+           
+           
         }else{
-          redirect('login');  
+         $responseData=["code"=>440,"msg"=>"logout" ];
         }
+        
+        return $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($responseData));
         
     }
   

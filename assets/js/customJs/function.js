@@ -214,6 +214,10 @@ $(document).on('click','#srch-sch',function(){
 });
 
 //update vaccine schedule
+$(document).on('click',"#schd-okay",function(){
+    $("#srch-sch").trigger("click");
+});
+
 $(document).on("click",".updt_vaccine",function(){
     let employee_vaccince_schid = $(this).val();
     let employee_id = $("#empid_"+employee_vaccince_schid).val()||"";
@@ -224,10 +228,23 @@ $(document).on("click",".updt_vaccine",function(){
     $.ajax({
         type: "POST",
         url: basePath + 'reminder/updateschdl',
-        dataType: "html",
+        dataType: "JSON",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data:{employee_vaccince_schid:employee_vaccince_schid,employee_id:employee_id,department_id:department_id,givendate:givendate,vaccineid:vaccineid},
         success: function(result) {
+            if(result.code==1){
+//                alert("Update");
+                
+                $("#schdl-action-msg").modal("show");
+                $("#shedule-update-message").text(result.msg);
+                
+            }else if(result.code==0){
+                 alert("Error");
+            }else{
+                $(window).attr('location',basePath+'login');
+            }
+            
+            
 //            $(".overlay").hide();
 //            $("#schdl-view").html(result)
 //            $('.medicadatatable').DataTable();

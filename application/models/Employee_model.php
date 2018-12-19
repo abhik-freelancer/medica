@@ -40,7 +40,7 @@ class Employee_model extends CI_Model {
                 ->join("hospital_master","employee_master.hospital_id = hospital_master.hospital_id")
                 ->where($where_arr)
                 ->order_by("employee_master.employee_name")->get();
-                
+$this->db->last_query();    
                  if($query->num_rows()>0){
             foreach($query->result() as $rows)
 				{

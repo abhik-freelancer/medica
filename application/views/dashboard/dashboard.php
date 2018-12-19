@@ -1,7 +1,7 @@
 <section class="content-header">
       <h1>
         Medica
-        <small>vaccination schedule</small>
+        <small>Vaccination schedule</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -9,9 +9,10 @@
       </ol>
 </section>
 <section class="content">
-    <div class="row">
+    
+<!--    <div class="row">
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+           small box 
           <div class="small-box bg-aqua">
             <div class="inner">
               <h3>150</h3>
@@ -26,7 +27,7 @@
         </div>
         
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+           small box 
           <div class="small-box bg-green">
             <div class="inner">
               <h3>53<sup style="font-size: 20px">%</sup></h3>
@@ -41,7 +42,7 @@
         </div>
         
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+           small box 
           <div class="small-box bg-yellow">
             <div class="inner">
               <h3>44</h3>
@@ -56,7 +57,7 @@
         </div>
         
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+           small box 
           <div class="small-box bg-red">
             <div class="inner">
               <h3>65</h3>
@@ -69,21 +70,21 @@
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-    </div>
-    <section class="col-lg-7 connectedSortable">
-         <!-- quick email widget -->
+    </div>-->
+<!--    <section class="col-lg-7 connectedSortable">
+          quick email widget 
           <div class="box box-info">
             <div class="box-header">
               <i class="fa fa-envelope"></i>
 
               <h3 class="box-title">Quick Email</h3>
-              <!-- tools box -->
+               tools box 
               <div class="pull-right box-tools">
                 <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
                         title="Remove">
                   <i class="fa fa-times"></i></button>
               </div>
-              <!-- /. tools -->
+               /. tools 
             </div>
             <div class="box-body">
               <form action="#" method="post">
@@ -106,5 +107,5 @@
           </div>
          
          
-    </section>
+    </section>-->
 </section>

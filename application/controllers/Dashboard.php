@@ -16,7 +16,7 @@ class Dashboard extends CI_Controller {
                 "official"=>["add"=>'asasada']
                 
             ];
-        $this->template->set('title', 'Abhik Dashboard');
+        $this->template->set('title', 'Medica-Staff Vaccination');
         $this->template->load('default_layout', 'contents', 'dashboard/dashboard', $data);
   }
 }

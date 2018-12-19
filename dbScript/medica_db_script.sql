@@ -83,11 +83,11 @@ CREATE TABLE `employee_master` (
   UNIQUE KEY `UNIQUE_EMPCODE` (`employee_code`),
   KEY `FK_dept_emp` (`department_id`),
   CONSTRAINT `FK_dept_emp` FOREIGN KEY (`department_id`) REFERENCES `department_master` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 /*Data for the table `employee_master` */
 
-insert  into `employee_master`(`employee_id`,`employee_code`,`employee_email`,`employee_mobile`,`hospital_id`,`department_id`,`employee_name`,`employee_doj`,`employee_status`,`vaccination_cert_given_date`,`creat_date`) values (1,'MED/12536','abhik@gmail.com','9874152363',1,1,'Abhik Ghosh','2017-11-01 00:00:00','Active','2017-12-01 00:00:00','2018-11-14 11:50:28'),(2,'MDS/00013','ab@gmail.com','9874141533',1,10,'Suman Mukherjee','2007-12-31 00:00:00','Active',NULL,'2018-11-16 16:12:50'),(3,'MED/000125','local@gmail.com','9874152636',1,9,'Mithilesh Routh','2001-05-06 00:00:00','Active','2018-11-22 00:00:00','2018-11-22 17:05:59'),(4,'MED/000126',NULL,NULL,1,4,'Dr. Shibsankar Kheto','2011-02-28 00:00:00','Active','2018-11-24 00:00:00','2018-11-22 17:06:58'),(5,'MED/4569',NULL,NULL,1,3,'Bidisha Sen','2018-11-01 00:00:00','Transfer','2018-11-30 00:00:00','2018-11-22 17:37:31'),(6,'MED/000420',NULL,NULL,1,3,'Anirban Ray','2018-11-01 00:00:00','Active','2018-11-30 00:00:00','2018-11-22 17:55:52'),(9,'E0001',NULL,NULL,1,1,'Anirban Ghosh','2002-12-14 00:00:00','Active',NULL,'2018-11-24 16:43:33'),(10,'E0003',NULL,NULL,1,9,'Shib Naskar','2008-12-12 00:00:00','Active',NULL,'2018-11-24 16:43:33'),(12,'E00012363','abc@gmail.com','9874141536',1,1,'Soumik Ghosh','2016-11-12 00:00:00','Active',NULL,'2018-11-27 16:01:34'),(13,'E00012364','s@gmail.com','9874141522',1,10,'Sounak Paul','2008-01-01 00:00:00','Active',NULL,'2018-11-27 16:01:34'),(14,'F0123','mith@yahoo.com','987415236',1,1,'Mithilesh Routh','2018-11-01 00:00:00','Active',NULL,'2018-11-27 16:33:45'),(15,'M-0022253','amiabhik@yhaoo.com','9874141688',1,3,'Tina Ambani','2018-12-01 00:00:00','Active',NULL,'2018-12-11 18:09:58'),(16,'100000','a@g.com','9874141266',1,3,'Bijay Pattyanayak','2018-12-01 00:00:00','Active',NULL,'2018-12-12 16:35:22');
+insert  into `employee_master`(`employee_id`,`employee_code`,`employee_email`,`employee_mobile`,`hospital_id`,`department_id`,`employee_name`,`employee_doj`,`employee_status`,`vaccination_cert_given_date`,`creat_date`) values (17,'M-0001','amir@medica.com','9874141533',1,3,'Amir Khan','2018-10-01 00:00:00','Active',NULL,'2018-12-19 15:25:54'),(18,'M-0000','admin@gmail.com','9874141566',1,10,'Admin','2000-01-01 18:27:16','Active',NULL,'2018-12-19 18:21:25');
 
 /*Table structure for table `employee_vaccination_detail` */
 
@@ -105,11 +105,11 @@ CREATE TABLE `employee_vaccination_detail` (
   `hospital_id` int(20) DEFAULT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`employe_vaccine_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Data for the table `employee_vaccination_detail` */
 
-insert  into `employee_vaccination_detail`(`employe_vaccine_id`,`employee_id`,`department_id`,`vaccination_id`,`schedule_date`,`actual_given_date`,`is_given`,`parent_vaccineId`,`hospital_id`,`created_date`) values (1,15,3,3,'2019-01-30 00:00:00','2018-12-01 00:00:00','Y',NULL,NULL,'2018-12-11 18:09:58'),(2,15,3,6,'2018-12-11 00:00:00','2018-12-08 00:00:00','Y',NULL,NULL,'2018-12-11 18:09:58'),(3,15,3,7,'2019-01-05 00:00:00',NULL,'N',6,NULL,'2018-12-11 18:09:58'),(4,16,3,3,'2019-01-30 00:00:00','2018-09-01 00:00:00','Y',NULL,1,'2018-12-12 16:35:22'),(5,16,3,6,'2018-12-11 00:00:00','2018-10-01 00:00:00','Y',NULL,1,'2018-12-12 16:35:22'),(6,16,3,9,'2018-10-01 00:00:00',NULL,'N',3,1,'2018-12-12 16:35:22'),(7,16,3,7,'2018-10-29 00:00:00','2018-10-29 00:00:00','Y',6,1,'2018-12-12 16:35:22'),(8,16,3,8,'2018-12-24 00:00:00',NULL,'N',7,1,'2018-12-12 16:35:22');
+insert  into `employee_vaccination_detail`(`employe_vaccine_id`,`employee_id`,`department_id`,`vaccination_id`,`schedule_date`,`actual_given_date`,`is_given`,`parent_vaccineId`,`hospital_id`,`created_date`) values (9,17,3,3,'2018-11-30 00:00:00',NULL,'N',NULL,1,'2018-12-19 15:25:55'),(10,17,3,6,'2018-10-11 00:00:00','2018-12-20 00:00:00','Y',NULL,1,'2018-12-19 15:25:55'),(16,17,3,7,'2019-01-17 00:00:00','2019-01-17 00:00:00','Y',6,NULL,'2018-12-19 18:09:41'),(17,17,3,8,'2019-03-14 00:00:00',NULL,'N',7,NULL,'2018-12-19 18:11:30');
 
 /*Table structure for table `hospital_master` */
 
@@ -142,11 +142,11 @@ CREATE TABLE `users` (
   `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `is_active` enum('Y','N') DEFAULT 'Y',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `users` */
 
-insert  into `users`(`user_id`,`username`,`password`,`hospital_id`,`employee_id`,`department_id`,`user_type`,`created_by`,`create_date`,`is_active`) values (1,'admin','admin123',1,1,1,'Admin',1,'2018-11-13 19:17:32','Y'),(2,'suman','suman123',1,2,10,'IC',1,'2018-11-16 16:10:34','Y'),(4,'imrankhan','ad12536op',1,3,9,'HR',NULL,'2018-11-26 19:52:22','Y'),(5,'abc123','1233',1,13,10,'IC',NULL,'2018-11-27 16:08:55','Y');
+insert  into `users`(`user_id`,`username`,`password`,`hospital_id`,`employee_id`,`department_id`,`user_type`,`created_by`,`create_date`,`is_active`) values (1,'admin','admin123',1,18,1,'Admin',1,'2018-11-13 19:17:32','Y'),(6,'amir@medica','abc123',1,17,3,'HR',1,'2018-12-19 18:15:08','Y');
 
 /*Table structure for table `vaccine` */
 
