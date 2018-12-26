@@ -73,7 +73,11 @@
                   <label for="departmentname">DOJ *</label>
                   <input type="text" class="form-control datepicker" id="employee_doj" name="employee_doj" autocomplete="off"
                          placeholder="" 
-                         value="<?php echo(($mode=="edit"?date('d-m-Y', strtotime($employee->employee_doj)):set_value('employee_doj'))); ?>">
+                         value="<?php echo(($mode=="edit"?date('d-m-Y', strtotime($employee->employee_doj)):set_value('employee_doj'))); ?>" <?php 
+                  if($mode=="edit"){
+                      echo " disabled";
+                  }
+                 ?>>
                    <?php echo form_error('employee_doj'); ?>
                 </div> 
                               </div>
@@ -121,7 +125,11 @@
                           </div>  
                           <div class="form-group">
                   <label for="employeedepatrment">Department *</label>
-                 <select class="form-control selectpicker"  data-actions-box="true" id="employeedepatrment" name="employeedepatrment">
+                 <select class="form-control selectpicker"  data-actions-box="true" id="employeedepatrment" name="employeedepatrment" <?php 
+                  if($mode=="edit"){
+                      echo " disabled";
+                  }
+                 ?>>
                           <option value="">--Select--</option>
                           <?php if($departmentList){
                              
@@ -185,6 +193,8 @@
 <!--                  <th>Action</th>-->
                 </tr>
                         <?php  
+                        if ($employeVaccineSchedule) {
+                        
                                 foreach ($employeVaccineSchedule as $value){
                        ?>
                         
@@ -214,7 +224,9 @@
                   
                 </tr>
                      <?php 
-                            } ?>
+                            } 
+                          }
+                            ?>
                    </tbody>
                    </table>
                     

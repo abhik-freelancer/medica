@@ -22,7 +22,8 @@ class Reminder_model extends CI_Model{
                 department_master.department_name,
                 employee_vaccination_detail.employee_id,employee_vaccination_detail.department_id,
                 employee_vaccination_detail.vaccination_id,
-                employee_vaccination_detail.is_given
+                employee_vaccination_detail.is_given,
+                employee_vaccination_detail.employee_dept_id
                 
                 FROM 
                 employee_master
@@ -30,8 +31,10 @@ class Reminder_model extends CI_Model{
                 employee_vaccination_detail ON employee_master.employee_id = employee_vaccination_detail.employee_id
                 INNER JOIN
                 department_master ON employee_vaccination_detail.department_id = department_master.department_id
+                
                 WHERE 
                 employee_vaccination_detail.schedule_date BETWEEN '".$fromDate."' AND '".$toDate."'
+                
                 AND employee_vaccination_detail.vaccination_id =".$vaccine_id." "
                . " ".$deptClause;
        $query = $this->db->query($sql);
@@ -60,12 +63,14 @@ class Reminder_model extends CI_Model{
         $this->db->update("employee_vaccination_detail",$update_arr);
             
          $childVaccine = $this->getChildFrequencyAndId($data['vaccination_id']);
+         $EmployeeDeptId=$this->getEmployeeDeptId($data['employee_id']);
         if($childVaccine!=""){
             //get next schedule date
             $childScheduleDate = $this->getScheduleDate($childVaccine->frequency, $data["actual_given_date"]);
             $insertArray=[
                 'employee_id'=>$data['employee_id'],
                 'department_id'=>$data['department_id'],
+                'employee_dept_id'=>$EmployeeDeptId->emp_dept_id,
                 'vaccination_id'=>$childVaccine->id,
                 'schedule_date'=>$childScheduleDate,
                 'actual_given_date'=>NULL,
@@ -74,6 +79,10 @@ class Reminder_model extends CI_Model{
                 'hospital_id'=>$data['hospitalId']
                 
             ];
+            // echo "<pre>";
+            // print_r($insertArray);
+            // echo "</pre>";
+            // exit();
             $this->db->insert("employee_vaccination_detail",$insertArray);
             
             //create next vaccine schedule...
@@ -149,5 +158,17 @@ class Reminder_model extends CI_Model{
         
          $schedule = date('Y-m-d',strtotime($givenDate." +".($frequency)." days"));
         return $schedule;
+    }
+
+    public function getEmployeeDeptId($employeeID){
+        $where="employee_id=".$employeeID." AND isActive='Y'";
+        $query = $this->db->select("*")
+        ->from("employee_department")
+        ->where($where)
+        ->get();
+        if($query->num_rows()>0){
+            $EmployeeDeptId = $query->row();
+        }
+    return $EmployeeDeptId;
     }
 }

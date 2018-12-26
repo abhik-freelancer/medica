@@ -60,7 +60,7 @@
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Medica</b>-Dashboard</span>
     </a>
-    <input type="hidden" name="basepath" id="basepath" value="<?php echo(base_url()); ?>"
+    <input type="hidden" name="basepath" id="basepath" value="<?php echo(base_url()); ?>">
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
@@ -353,9 +353,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<?php echo(base_url()); ?>employee"><i class="fa fa-circle-o"></i> Employee</a></li>
-            <li><a href="<?php echo(base_url()); ?>department"><i class="fa fa-circle-o"></i> Department</a></li>
             <li><a href="<?php echo(base_url()); ?>vaccine"><i class="fa fa-circle-o"></i> Vaccine</a></li>
+            <li><a href="<?php echo(base_url()); ?>department"><i class="fa fa-circle-o"></i> Department</a></li>
+            <li class="active"><a href="<?php echo(base_url()); ?>employee"><i class="fa fa-circle-o"></i> Employee</a></li>            
           </ul>
         </li>
 <!--        <li class="treeview">
@@ -384,19 +384,19 @@
         <li class="treeview">
           <a href="#">
             <i class="fa fa-medkit"></i>
-            <span>Vaccination</span>
+            <span>Vaccine</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo(base_url()); ?>reminder"><i class="fa fa-circle-o"></i> Vaccine schedule</a></li>
-            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Menu 2</a></li>
+            <!-- <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Menu 2</a></li>
             <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Menu 3</a></li>
-            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Menu 4</a></li>
+            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Menu 4</a></li> -->
           </ul>
         </li>
-        <li class="treeview">
+        <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-newspaper-o"></i>
             <span>Report</span>
@@ -409,7 +409,7 @@
             <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Report 2</a></li>
             
           </ul>
-        </li>
+        </li> -->
         
         <li class="treeview">
           <a href="#">
@@ -422,6 +422,7 @@
           <ul class="treeview-menu">
               <li><a href="<?php echo(base_url()) ?>importemployee"><i class="fa fa-circle-o"></i> Import employee</a></li>
             <li><a href="<?php echo(base_url()) ?>user"><i class="fa fa-circle-o"></i> User creation</a></li>
+            <li><a href="<?php echo(base_url()) ?>changedepartment"><i class="fa fa-circle-o"></i>Change Depertment</a></li>
             
           </ul>
           
@@ -749,6 +750,7 @@ echo($contents);
 <script src="<?php echo base_url(); ?>assets/js/bootstrapselect.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/searchable_dropdown.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/customJs/function.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/customJs/change_department.js"></script>
 
 <script>
   $(function () {

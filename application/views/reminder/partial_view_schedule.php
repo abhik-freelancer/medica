@@ -24,6 +24,7 @@
                             <input type="hidden" value="<?php echo($val->employee_id); ?>" id="empid_<?php echo($val->employe_vaccine_id); ?>"/>
                             <input type="hidden" value="<?php echo($val->department_id); ?>" id="empdept_<?php echo($val->employe_vaccine_id); ?>" />
                             <input type="hidden" value="<?php echo($val->vaccination_id); ?>" id="vaccineid_<?php echo($val->employe_vaccine_id);?>"/>
+                            <input type="hidden" value="<?php echo($val->employee_dept_id); ?>" id="employee_dept_id_<?php echo($val->employe_vaccine_id);?>"/>
                             <?php echo($val->employee_name); ?>
                         </td>
                         <td><?php echo($val->employee_code); ?></td>

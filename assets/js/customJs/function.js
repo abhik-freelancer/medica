@@ -224,13 +224,14 @@ $(document).on("click",".updt_vaccine",function(){
     let department_id = $("#empdept_"+employee_vaccince_schid).val()||"";
     let givendate = $("#vaccine_taken_date_"+employee_vaccince_schid).val()|| "";
     let vaccineid = $("#vaccineid_"+employee_vaccince_schid).val()||"";
+    let employee_dept_id = $("#employee_dept_id_"+employee_vaccince_schid).val()||"";
     
     $.ajax({
         type: "POST",
         url: basePath + 'reminder/updateschdl',
         dataType: "JSON",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data:{employee_vaccince_schid:employee_vaccince_schid,employee_id:employee_id,department_id:department_id,givendate:givendate,vaccineid:vaccineid},
+        data:{employee_vaccince_schid:employee_vaccince_schid,employee_id:employee_id,department_id:department_id,givendate:givendate,vaccineid:vaccineid,employee_dept_id:employee_dept_id},
         success: function(result) {
             if(result.code==1){
 //                alert("Update");
@@ -321,6 +322,11 @@ function getVaccineSchedule(dateofjoin,departmentId,basepath)
          type: "post",
          dataType: "html",
          success: function (data) {
+            // console.log("123"+data);
+            // if(data==440){
+            //     alert("440");
+            //     window.location(basepath+"login");
+            // }else{
              $("#vaccine-sdchl").html(data);
               //$('.datepicker').datepicker();
               $('.datepicker').datepicker({
@@ -329,6 +335,7 @@ function getVaccineSchedule(dateofjoin,departmentId,basepath)
                      uiLibrary: 'bootstrap',
                      autoclose: true
                     });
+                //}
          },
          error: function (xhr, status) {
              alert("Sorry, there was a problem!");

@@ -104,7 +104,10 @@
                       <?php if($employeeList){ 
                             foreach($employeeList as $employee){
                           ?>
-                      <option value="<?php  $employee->employee_id ?>" <?php if($employee->employee_id==$user->employee_id){echo('selected');} ?> > <?php echo ($employee->employee_name); ?> </option>
+                      <option value="<?php  echo($employee->employee_id); ?>" <?php if($employee->employee_id==$user->employee_id){echo('selected');} ?> >
+                       <?php echo ($employee->employee_name); ?> 
+                       </option>
+
                       <?php } }?>
                       
                   </select>

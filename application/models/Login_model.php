@@ -1,13 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Login_model extends CI_Model{
-     public function checkLogin($user_name,$password)
+     public function checkLogin($user_name,$password,$hospital)
     {
         
        
         $userId="";
         $where_arr =["username"=>$this->db->escape_str($user_name),
-                     "password"   =>$this->db->escape_str($password),"is_active"=>'Y'
+                     "password"   =>$this->db->escape_str($password),
+                     "hospital_id"   =>$this->db->escape_str($hospital),
+                     "is_active"=>'Y'
             ];
        $query= $this->db->select("users.*")
                 ->where($where_arr)
@@ -65,6 +67,21 @@ class Login_model extends CI_Model{
         $this->db->where("users.user_id",$userId);
         $this->db->update("users",$update);
         
+    }
+ 
+ /*----------------------------------- added by sandipan sarkar on 20/.18/2018* -----------------------------------*/
+    public function getAllHospital(){
+    $hospital=array();   
+    $query = $this->db->select("*")
+                ->from("hospital_master")
+             ->get();
+       
+        if($query->num_rows()>0){
+            foreach($query->result() as $row){
+                $hospital[]=$row;
+            }
+        }
+        return $hospital;
     }
     
    

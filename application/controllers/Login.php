@@ -12,28 +12,33 @@ class Login extends CI_Controller {
     public function index(){
        $this->load->helper('form');
        $this->load->library('form_validation');
+       $hospital_details['hospital_details']= $this->login->getAllHospital();
        $page="login/login";
-       $this->load->view($page);
+       $this->load->view($page,$hospital_details);
     }
     
     public function check_login() 
-     {
+    {
         $this->load->helper('form');
         $this->load->library('form_validation');
+        $this->form_validation->set_rules('hospital_id', 'Hospital', 'required');
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('userpassword', 'Password', 'required');
         $this->form_validation->set_error_delimiters('<div class="error-login">', '</div>');
         
         if ($this->form_validation->run() == FALSE)
            {
+                   //redirect('login');
+                    $hospital_details['hospital_details']= $this->login->getAllHospital();
                     $page="login/login";
-                    $this->load->view($page);    
+                    $this->load->view($page,$hospital_details);    
            }
            else
            {
                 $username = $this->input->post('username');
+                $hospital = $this->input->post('hospital_id');
                 $password = $this->input->post('userpassword');
-                $user_id = $this->login->checkLogin($username, $password);
+                $user_id = $this->login->checkLogin($username,$password,$hospital);
                 if($user_id!=""){
                     $user = $this->login->get_user($user_id);
                     $employee = $this->employee->getEmployeeDataByEmployeeId($user->employee_id);

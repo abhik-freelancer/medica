@@ -52,7 +52,7 @@ class User extends CI_Controller{
                     $data=[
                         "mode"=>"add",
                         "user_id"=>0,
-                         "user"=>"",
+                        "user"=>"",
                         "departmentList"=>$departmentList,
                         "employeeList"=>"",
                         "usertype"=>$UserType
@@ -79,11 +79,16 @@ class User extends CI_Controller{
                   
                   $this->load->helper('form');
                   $this->load->library('form_validation');
+
+                
+
+
                   $this->form_validation->set_rules('user_login_name', 'Login', 'required');
                   $this->form_validation->set_rules('user_password', 'Password', 'required');
+                  $this->form_validation->set_rules('user_type', 'Type', 'required');
                   $this->form_validation->set_rules('departmentname', 'Department', 'required');
                   $this->form_validation->set_rules('employee', 'Employee', 'required');
-                  $this->form_validation->set_rules('user_type', 'Type', 'required');
+                  
                   //user_type
                  
                   $this->form_validation->set_error_delimiters('<div class="error-login">', '</div>');
@@ -91,6 +96,8 @@ class User extends CI_Controller{
                   
                   $departmentList = $this->commondatamodel->getAllDropdownData("department_master");
                   $UserType =unserialize(USER_TYPE);
+                  $where =["user_id"=>$this->input->post("hduserid")];
+                  $userdata = $this->commondatamodel->getSingleRowByWhereCls("users",$where);
                   
                 $m_mode = $this->input->post("mode");
                 $m_userId = $this->input->post("hduserid");
@@ -99,16 +106,21 @@ class User extends CI_Controller{
                 $m_department = $this->input->post("departmentname");
                 $m_employee = $this->input->post("employee");
                 $m_userType = $this->input->post("user_type");
+
+
+              
+
+
                
-                   if ($this->form_validation->run() == FALSE)
+                   if ($this->form_validation->run() === FALSE)
                     {
                       $data=[
                         "mode"=>$m_mode,
                         "user_id"=>$m_userId,
-                        "user"=>"",
+                        "user"=>$userdata,
                         "departmentList"=>$departmentList,
                         "employeeList"=>"",
-                        "usertype"=>$UserType
+                        "usertype"=>$UserType 
                        
                     ];
                         $this->template->set('title', 'User');
@@ -171,7 +183,7 @@ class User extends CI_Controller{
                                redirect("user");
                            }else{
                                $this->session->set_flashdata('user_insert_error',UPDATE_ERROR);
-                               redirect("user/add_edit/".$m_employeeId);
+                               redirect("user/add_edit/".$m_userId);
                            }
                         }
                     }

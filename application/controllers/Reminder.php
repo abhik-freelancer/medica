@@ -40,11 +40,20 @@ class Reminder extends CI_Controller{
             $data =[
                 "vaccineschdl"=>$this->remindermodel->getScheduleVaccination($fromDate,$toDate,$vaccine,$department)
             ];
+            // echo "<pre>";
+            // print_r($data);
+            // echo "</pre>";
+            // exit();
             $page = "reminder/partial_view_schedule";
             $this->load->view($page,$data);
             
         }else{
-            redirect('login');
+            $data=[];
+            $page = "dashboard/logout_view";
+            $this->load->view($page,$data);
+        //redirect(login);
+           // echo("<script> window.location(". base_url() ."login) </script>");
+         
         }
         
     }
@@ -67,6 +76,9 @@ class Reminder extends CI_Controller{
                 "hospitalId"=>$this->session->user_data['hospitalid']
                     
             ];
+            // echo "<pre>";
+            // print_r($data);
+            // echo "</pre>";
            $updateStatus= $this->remindermodel->updateschdl($data);
            
            if($updateStatus){
@@ -80,7 +92,8 @@ class Reminder extends CI_Controller{
            
            
         }else{
-         $responseData=["code"=>440,"msg"=>"logout" ];
+         
+            $responseData=["code"=>440,"msg"=>"logout" ];
         }
         
         return $this->output

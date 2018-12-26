@@ -55,6 +55,21 @@ height:100%;
                     <?php echo $this->session->flashdata('msg'); ?>
                   
                     <form class="login-form" name="loginfrm" method="post" action="<?php echo(base_url());?>Login/check_login">
+                      <div class="form-group">
+                        
+                        <label for="hospital" class="text-uppercase">HOSPITAL</label>
+                        <select class="form-control" name="hospital_id" id="hospital_id">
+                          <option value="">Select..</option>
+                          <?php
+                         foreach ($hospital_details as $hospital) {
+                            echo "<option value=".$hospital->hospital_id.">".$hospital->hospital_name."</option>";
+                             
+                         }
+                        ?>                                                     
+                        </select>
+                        <?php echo form_error('hospital_id'); ?>
+
+                      </div>
                         <div class="form-group">
                             <label for="username" class="text-uppercase">Username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="User name">

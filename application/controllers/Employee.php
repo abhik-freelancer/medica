@@ -68,22 +68,25 @@ class Employee extends CI_Controller{
     public function action(){
          if($this->session->user_data['userid']!="" && !empty($this->session->user_data['userid'])){
               if($this->session->user_data['role']=='Admin'){
-                  
+                
+                $m_mode = $this->input->post("mode");
+
                   $this->load->helper('form');
                   $this->load->library('form_validation');
                   $this->form_validation->set_rules('employee_name', 'Name', 'required');
                   $this->form_validation->set_rules('employee_code', 'Code', 'required');
+                  if($m_mode=="add"){
                   $this->form_validation->set_rules('employeedepatrment', 'Department', 'required');
                   $this->form_validation->set_rules('employee_doj', 'DOJ', 'required');
-                  
+                  }
                   
                   $this->form_validation->set_error_delimiters('<div class="error-login">', '</div>');
-                 // print_r($_POST);exit;
+                  //print_r($_POST);exit;
                   
                 $departmentList = $this->commondatamodel->getAllDropdownData("department_master");
                 $employeeStatus =unserialize(EMPLOYEE_STATUS);
                   
-                $m_mode = $this->input->post("mode");
+                
                 $m_employeeId = $this->input->post("hddemployeeid");
                 $m_employeeName = $this->input->post("employee_name");
                 $m_employeeCode = $this->input->post("employee_code");
@@ -110,7 +113,7 @@ class Employee extends CI_Controller{
                         "employee_id"=>(int)$m_employeeId,
                         "departmentList"=>$departmentList,
                         "employeeStatus"=>$employeeStatus,
-                       
+                       "employeVaccineSchedule"=>""
                         ];
                         $this->template->set('title', 'Employee');
                         $this->template->load('default_layout', 'contents', 'employee/add_edit', $data);
@@ -139,18 +142,32 @@ class Employee extends CI_Controller{
                             ];
                             //var_dump($insert_data);
                           $employeeId=$this->commondatamodel->insertSingleTableData("employee_master",$insert_data);
+
+                          $employeeDeptInsrtData =[
+                              "employee_id"=>$employeeId,
+                              "dept_id"=>$m_department,
+                              "date_of_join"=>date('Y-m-d',strtotime($m_doj)),
+                              "from_module"=>'M' ,// to identify the insertion module -M:= Employee Master
+                              "isActive"=>'Y'
+                          ];  
+
+                          $employeeDepartmentId = $this->commondatamodel->insertSingleTableData("employee_department",$employeeDeptInsrtData);
+
+                         
                           if(count($m_dtlvaccineId)>0){
                               for($i=0;$i<count($m_dtlvaccineId);$i++)
                               {
                                   $employee_vaccination_detail=[
                                     "employee_id"  => $employeeId,
                                     "department_id"=>$m_department,
+                                    "employee_dept_id"=>$employeeDepartmentId,
                                     "vaccination_id"=>$m_dtlvaccineId[$i],
                                     "schedule_date"=>($m_dtlscheduledate[$i]==""?NULL:date('Y-m-d', strtotime($m_dtlscheduledate[$i]))),
                                     "actual_given_date"=>($m_dtlgivenDt[$i]==""?NULL:date('Y-m-d', strtotime($m_dtlgivenDt[$i]))) ,
                                     "is_given" =>($m_dtlgivenDt[$i]==""?"N":"Y") ,
                                     "parent_vaccineId" =>($m_dtlparent[$i]==""?NULL:$m_dtlparent[$i]),
-                                    "hospital_id"=>$this->session->user_data['hospitalid']
+                                    "hospital_id"=>$this->session->user_data['hospitalid'],
+                                    
                                   ];
                                  $this->commondatamodel->insertSingleTableData("employee_vaccination_detail",$employee_vaccination_detail);   
                               }
@@ -180,17 +197,24 @@ class Employee extends CI_Controller{
                         
                        
                        }else{
+
+
+
+
                              $UpdateArr = [
                                "employee_code"=>$m_employeeCode,
                                "hospital_id"=>$this->session->user_data['hospitalid'],
-                               "department_id"=>$m_department,
+                            //    "department_id"=>$m_department,
                                "employee_name"=>$m_employeeName,
-                               "employee_doj"=>date('Y-m-d', strtotime($m_doj)),
+                            //    "employee_doj"=>date('Y-m-d', strtotime($m_doj)),
                                "employee_status"=> $m_empStatus,
                                "vaccination_cert_given_date"=>($m_certifc==""? NULL:date('Y-m-d', strtotime($m_certifc))),
                                "employee_mobile"=> $m_empMobile,
                                "employee_email"=>$m_empEmail
                            ];
+
+                           
+
                            $update=$this->commondatamodel->updateSingleTableData("employee_master",$UpdateArr,array("employee_id"=>$m_employeeId));
                            //vaccination schedule update
                            
