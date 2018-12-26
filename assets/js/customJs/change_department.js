@@ -62,21 +62,21 @@ $(document).ready(function(){
 		e.preventDefault(); 
 		var department_id=$('#new_department').val();
 		var dot=$('#dot').val();
-	
-		getVaccineScheduleDetails(dot,department_id,basePath);
+		var chose_department=$('#chose_department').val();
+		getVaccineScheduleDetails(dot,department_id,chose_department,basePath);
 	});
 
 });
 
 
-function getVaccineScheduleDetails(dot,departmentId,path)
+function getVaccineScheduleDetails(dot,departmentId,chose_department,path)
 {
     //alert(dot+" "+departmentId+" "+basepath);
     if(dot!="" && departmentId!=""){
         $.ajax({
          url: path+'changedepartment/getVaccineSchedule',
          data: {
-             dot: dot,deptId:departmentId
+             dot: dot,deptId:departmentId,old_dept:chose_department
          },
          type: "post",
          dataType: "html",

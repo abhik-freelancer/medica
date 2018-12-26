@@ -65,8 +65,13 @@ class ChangeDepartment_model extends CI_Model{
         return $employee_details;
     }
 
-    public function getEmployeeVaccineSchedule($departmentId,$date_of_transfer,$hospitalId)
+    public function getEmployeeVaccineSchedule($departmentId,$date_of_transfer,$hospitalId,$old_dept)
     {
+        $old_vaccineID=$this->getVaccineByDepartment($old_dept);
+
+
+        // print_r($old_vaccineID);
+        // exit();
      $employeeVaccine="";
         $whereClause = [
             "department_vaccine.department_id "=>$departmentId,
@@ -74,9 +79,14 @@ class ChangeDepartment_model extends CI_Model{
             "vaccine.parent_vaccine"=>NULL
         ];
         
-        $query = $this->db->select("vaccine.*")
-                    ->from("vaccine")->join("department_vaccine","vaccine.id = department_vaccine.vaccine_id")
-                    ->where($whereClause)->get();
+        $query = $this->db->select("vaccine.*,department_vaccine.*")
+                    ->from("department_vaccine")->join("vaccine","department_vaccine.vaccine_id=vaccine.id")
+                    ->where($whereClause)
+                    ->where_not_in("department_vaccine.`vaccine_id`",$old_vaccineID)
+                    ->get();
+
+                    // echo $this->db->last_query();
+                    // exit();
         $dateOfTransfer = date("Y-m-d", strtotime($date_of_transfer));
         if($query->num_rows()>0){
             foreach($query->result() as $rows)
@@ -126,5 +136,22 @@ class ChangeDepartment_model extends CI_Model{
        return $schedule; 
     }
 
+
+ public function getVaccineByDepartment($department_id)
+ {
+    
+    $query=$this->db->select("vaccine_id")
+                    ->from("department_vaccine")
+                    ->where("department_id=".$department_id)
+                    ->get();
+    if($query->num_rows()>0)
+    {
+        $vaccine=[];
+        foreach ($query->result() as $row) {           
+           $vaccine []=$row->vaccine_id;
+        }     
+    }
+    return $vaccine;
+ }
     
 }

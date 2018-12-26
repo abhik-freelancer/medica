@@ -1,7 +1,7 @@
 <!-- <div class="box box-primary"></div>  -->
 <div class="box-header with-border"></div>
             <div class="box-header with-border">
-                <h3>Vaccination schedule</h3>
+                <h3>vaccine schedule</h3>
             </div>
                 
 

@@ -58,9 +58,10 @@ class Changedepartment extends CI_Controller {
        {
            $dot = $this->input->post("dot");
            $departmentId = $this->input->post("deptId");
+           $old_dept = $this->input->post("old_dept");
            $data="";
            if($dot!="" && $departmentId!=""){
-               $data["schedule"]= $this->change_depertment->getEmployeeVaccineSchedule($departmentId,$dot,$this->session->user_data['hospitalid']);
+               $data["schedule"]= $this->change_depertment->getEmployeeVaccineSchedule($departmentId,$dot,$this->session->user_data['hospitalid'],$old_dept);
             //    print_r($data);
             //    exit();
                $page = "department/partial_vaccine";

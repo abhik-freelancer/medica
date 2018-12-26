@@ -1,7 +1,7 @@
 <section class="content-header">
       <h1>
         Medica
-        <small>Change Department</small>
+        <small>Vaccine schedule</small>
       </h1>
       <ol class="breadcrumb">
           <li><a href="<?php echo(base_url())?>dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -48,7 +48,7 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">  
                     <label for="chose_department">Current Department *</label>                  
-                    <select name="chose_department" id="chose_department" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
+                    <select name="chose_department" id="chose_department" class="form-control selectpicker"  data-live-search="true">
                       <option value="0">-- Select Department --</option>
                       <?php
                       foreach ($departmentlist as $department) {

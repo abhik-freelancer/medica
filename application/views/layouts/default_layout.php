@@ -422,7 +422,7 @@
           <ul class="treeview-menu">
               <li><a href="<?php echo(base_url()) ?>importemployee"><i class="fa fa-circle-o"></i> Import employee</a></li>
             <li><a href="<?php echo(base_url()) ?>user"><i class="fa fa-circle-o"></i> User creation</a></li>
-            <li><a href="<?php echo(base_url()) ?>changedepartment"><i class="fa fa-circle-o"></i>Change Depertment</a></li>
+            <li><a href="<?php echo(base_url()) ?>changedepartment"><i class="fa fa-circle-o"></i>Change Department</a></li>
             
           </ul>
           
