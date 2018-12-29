@@ -46,8 +46,8 @@
                       
                       ?>
                       <label for="vaccinelst">Vaccine</label>
-                      <select class="form-control selectpicker" multiple data-actions-box="true" id="vaccinelst" name="vaccinelst[]">
-                          <option value="">--Select--</option>
+                      <select class="form-control selectpicker" multiple data-actions-box="true" id="vaccinelst" name="vaccinelst[]" >
+                          <!-- <option value="">--Select--</option> -->
                           <?php if($vaccinelist){
                                 $selected = explode(",", $selected_vaccine); 
                               

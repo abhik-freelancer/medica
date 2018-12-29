@@ -12,10 +12,10 @@ class Department extends CI_Controller{
     }
     public function index(){
         if($this->session->user_data['userid']!="" && !empty($this->session->user_data['userid'])){
-             header("Access-Control-Allow-Origin: *");
+             header("Access-Control-Allow-Origin: *");            
               $data = [
                 "departments"=> $this->department->getDepartmentList($this->session->user_data['hospitalid']),
-            ];
+            ];         
         $this->template->set('title', 'Department');
         $this->template->load('default_layout', 'contents', 'department/list', $data);
         }else{

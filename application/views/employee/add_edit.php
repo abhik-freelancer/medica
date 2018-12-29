@@ -149,26 +149,7 @@
                </select>
                    <?php echo form_error('employeedepatrment'); ?>
                 </div>
-                       <div class="form-group">
-                  <label for="employee_status">Status *</label>
-                 <select class="form-control selectpicker"  data-actions-box="true" id="employee_status" name="employee_status">
-                          <?php 
-                          
-                          if($employeeStatus){
-                                foreach($employeeStatus as $key=>$val){
-                                    if($mode=="edit"){
-                                        $boolFlagStatus=($key==$employee->employee_status?TRUE:FALSE);
-                              }else{
-                                   $boolFlagStatus=FALSE;
-                              }
-                              ?>
-                          <option value="<?php echo($key);?>" <?php echo  set_select('employee_status', $key,$boolFlagStatus); ?>> <?php echo($val); ?></option>
-                          <?php } 
-                          }
-                          ?>
-               </select>
-                   
-                </div> 
+                       
                           <!-- second-->
                       </div>
                       

@@ -79,7 +79,7 @@ $this->db->last_query();
                 
                 $mobile = $objWorksheet->getCellByColumnAndRow(4, $i)->getValue();
                 $email = $objWorksheet->getCellByColumnAndRow(5, $i)->getValue();
-                
+                $joiningDate= date('Y-m-d', strtotime(str_replace('/', '-', $DOJ)));
                 $where = array("employee_master.employee_code" => $employee_code);
                 $isExistEmpcode = $this->commondatamodel->duplicateValueCheck('employee_master', $where);
 
@@ -88,7 +88,7 @@ $this->db->last_query();
                         "hospital_id" => $session->user_data['hospitalid'],
                         "department_id" => $this->department->getDepartmentIdByName($department),
                         "employee_name" => $employee_name,
-                        "employee_doj" => date('Y-m-d', strtotime(str_replace('/', '-', $DOJ))),
+                        "employee_doj" =>$joiningDate,
                         "employee_email"=>$email,
                         "employee_mobile"=>$mobile
                     ];
@@ -100,12 +100,18 @@ $this->db->last_query();
                         "hospital_id" => $session->user_data['hospitalid'],
                         "department_id" => $this->department->getDepartmentIdByName($department),
                         "employee_name" => $employee_name,
-                        "employee_doj" => date('Y-m-d', strtotime(str_replace('/', '-', $DOJ))),
+                        "employee_doj" => $joiningDate,
                         "employee_email"=>$email,
                         "employee_mobile"=>$mobile,
                         "employee_status" => 'Active'
                     ];
+                   
                     $this->db->insert('employee_master', $employee_data);
+                    $last_id=$this->db->insert_id();                     
+                    $this->insertIntoEmployeeDepartment($last_id,$this->department->getDepartmentIdByName($department),$joiningDate,$session->user_data['hospitalid']);             
+
+              
+
                 }
             }
 
@@ -123,6 +129,7 @@ $this->db->last_query();
     
     public function getEmployeeVaccineSchedule($departmentId,$date_of_join,$hospitalId)
     {
+        
      $employeeVaccine="";
         $whereClause = [
             "department_vaccine.department_id "=>$departmentId,
@@ -133,6 +140,8 @@ $this->db->last_query();
         $query = $this->db->select("vaccine.*")
                     ->from("vaccine")->join("department_vaccine","vaccine.id = department_vaccine.vaccine_id")
                     ->where($whereClause)->get();
+
+                   
         $dateOfJoining = date("Y-m-d", strtotime($date_of_join));
         if($query->num_rows()>0){
             foreach($query->result() as $rows)
@@ -150,11 +159,10 @@ $this->db->last_query();
                         "givenDate"=>""
                     ];
 		}
-            
-            
-            
+                       
            // $department = $query->row();
         }
+       
         return $employeeVaccine;
         
     }
@@ -210,6 +218,44 @@ $this->db->last_query();
         ];
         $this->db->where($delClause);
         $this->db->delete("employee_vaccination_detail");
+    }
+
+
+// added by sandipan sarkar on 28/12/2018
+
+    public function insertIntoEmployeeDepartment($last_id,$department_id,$doj,$hospitalid)
+    {
+        $employee_department=[
+            "employee_id"=>$last_id,
+            "dept_id" => $department_id,
+            "date_of_join" => $doj,
+            "from_module"=>'XL' ,// to identify the insertion module -XL:= importfile
+            "isActive"=>'Y'
+        ];
+        $this->db->insert('employee_department', $employee_department);
+        $employee_dept_id=$this->db->insert_id(); 
+        $getEmployeeVaccineSchedule=$this->getEmployeeVaccineSchedule($department_id,$doj,$hospitalid);        
+        if (!empty($getEmployeeVaccineSchedule)) {        
+            foreach ($getEmployeeVaccineSchedule as $value) {                
+                $employee_vaccination_detail=[
+                    "employee_id"  =>$last_id,
+                    "department_id"=>$department_id,
+                    "employee_dept_id"=>$employee_dept_id,
+                    "vaccination_id"=>$value['vaccineId'],
+                    "schedule_date"=>($value['scheduleDate']==""?NULL:date('Y-m-d', strtotime($value['scheduleDate']))),
+                    "actual_given_date"=>($value['givenDate']==""?NULL:date('Y-m-d', strtotime($value['givenDate']))) ,
+                    "is_given" =>($value['givenDate']==""?"N":"Y") ,
+                    "parent_vaccineId" =>($value['parent_vaccine']==""?NULL:$value['parent_vaccine']),
+                    "hospital_id"=>$hospitalid,
+                    
+                ];
+                $this->db->insert('employee_vaccination_detail', $employee_vaccination_detail);
+            }
+        }
+        
+       return true;
+
+        
     }
     
 }
