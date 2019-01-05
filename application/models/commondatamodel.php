@@ -362,16 +362,41 @@ class commondatamodel extends CI_Model{
             $query = $this->db->select("*")->from($table)->where($where)->get();
             if($query->num_rows()>0){
 			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
+			}
+			else
+			{
+				return FALSE;
+			}
             
             
-        }
-	
+		}
 
-	
+		/**
+		 * To get row count from a table with where caulse
+		 * EX :- getRowCountWithWhereCaulse(tablename,id=22)
+		 * by sandipan sarkar on 29/12/2018
+		 */
+		
+		public function getRowCountWithWhereCaulse($table,$where)
+		{
+			$this->db->select('*')
+				->from($table)
+				->where($where);
+
+			$query = $this->db->get();
+			$rowcount = $query->num_rows();		
+			if($query->num_rows()>0){
+				return $rowcount;
+			}
+			else
+			{
+				return 0;
+			}
+		
+
+		}
+
+
+		
 	
 }

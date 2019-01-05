@@ -1,4 +1,6 @@
+
 $(document).ready(function(){
+    
     var basePath= $("#basepath").val();
      $('.selectpicker').selectpicker();
      $('.datepicker').datepicker({
@@ -16,6 +18,8 @@ $("#fupForm").on('submit', function(e){
         var formData = new FormData(form);
         validateEmployeeImport(basePath,formData)
 });
+
+
 
 $("#departmentname").change(function(){
     var departId = $(this).val()||"";
@@ -158,60 +162,60 @@ $("body").on('click','.rdel',function(){
     }); 
 // vaccination schedule detail end //
 
-//vaccination shedule reminder//
 
-$(document).on('click','#srch-sch',function(){
-    var fromDate = $("#sch-from-date").val()||"";
-    var toDate = $("#sch-to-date").val()||"";
-    var vaccine =  $("#vaccine_reminder").val()||"";
-    var department = $("#dept").val()||"";
+
+// $(document).on('click','#srch-sch',function(){
+//     var fromDate = $("#sch-from-date").val()||"";
+//     var toDate = $("#sch-to-date").val()||"";
+//     var vaccine =  $("#vaccine_reminder").val()||"";
+//     var department = $("#dept").val()||"";
     
     
-    if(validateSearch())
-    {
-        $(".overlay").show();
+//     if(validateSearch())
+//     {
+//         $(".overlay").show();
         
-        $.ajax({
-        type: "POST",
-        url: basePath + 'reminder/getVaccineSchedule',
-        dataType: "html",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        data:{"fromDate":fromDate,"toDate":toDate,"vaccine":vaccine,"department":department},
-        success: function(result) {
-            $(".overlay").hide();
-            $("#schdl-view").html(result)
-            $('.medicadatatable').DataTable();
-            $('.datepicker').datepicker({
-                     format: 'dd-mm-yyyy',
-                     todayHighlight: true,
-                     uiLibrary: 'bootstrap',
-                     autoclose: true
-                    });
-        },
-        error: function(jqXHR, exception) {
-            var msg = '';
-            if (jqXHR.status === 0) {
-                msg = 'Not connect.\n Verify Network.';
-            } else if (jqXHR.status == 404) {
-                msg = 'Requested page not found. [404]';
-            } else if (jqXHR.status == 500) {
-                msg = 'Internal Server Error [500].';
-            } else if (exception === 'parsererror') {
-                msg = 'Requested JSON parse failed.';
-            } else if (exception === 'timeout') {
-                msg = 'Time out error.';
-            } else if (exception === 'abort') {
-                msg = 'Ajax request aborted.';
-            } else {
-                msg = 'Uncaught Error.\n' + jqXHR.responseText;
-            }
-            // alert(msg);  
-        }
-    });
-    }
+//         $.ajax({
+//         type: "POST",
+//         url: basePath + 'reminder/getVaccineSchedule',
+//         dataType: "html",
+//         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+//         data:{"fromDate":fromDate,"toDate":toDate,"vaccine":vaccine,"department":department},
+//         success: function(result) {
+//             $(".overlay").hide();
+//             $("#schdl-view").html(result)
+//             $('.medicadatatable').DataTable();
+//             $('.datepicker').datepicker({
+//                      format: 'dd-mm-yyyy',
+//                      todayHighlight: true,
+//                      uiLibrary: 'bootstrap',
+//                      autoclose: true
+//                     });
+//         },
+//         error: function(jqXHR, exception) {
+//             var msg = '';
+//             if (jqXHR.status === 0) {
+//                 msg = 'Not connect.\n Verify Network.';
+//             } else if (jqXHR.status == 404) {
+//                 msg = 'Requested page not found. [404]';
+//             } else if (jqXHR.status == 500) {
+//                 msg = 'Internal Server Error [500].';
+//             } else if (exception === 'parsererror') {
+//                 msg = 'Requested JSON parse failed.';
+//             } else if (exception === 'timeout') {
+//                 msg = 'Time out error.';
+//             } else if (exception === 'abort') {
+//                 msg = 'Ajax request aborted.';
+//             } else {
+//                 msg = 'Uncaught Error.\n' + jqXHR.responseText;
+//             }
+//             // alert(msg);  
+//         }
+//     });
+//     }
   
     
-});
+// });
 
 //update vaccine schedule
 $(document).on('click',"#schd-okay",function(){
@@ -547,3 +551,108 @@ function validateEmployeeImport(basepath,formData)
         });
 }
 
+// added by sandipan sarkar on 30-12-2018
+function vaccinationAndEmployee(id)
+{
+    var basePath= $("#basepath").val();
+    //alert(id);
+    $.ajax({        
+        type: "POST",
+        url: basePath + 'dashboard/groupByList',
+        data:{'viewname':id},
+        dataType: "html",
+        //contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+        success: function(result) {
+            $("#DetailList").html(result)
+        },
+        error: function(jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            // alert(msg);  
+        }
+    });
+}
+
+$(window).on('load', function(){ 
+    var basePath= $("#basepath").val();
+    var vaccine =  $("#vaccine_reminder").val();
+    var fromDate = $("#sch-from-date").val();
+    var toDate = $("#sch-to-date").val();
+    if(window.location.href==basePath+"reminder/index/"+vaccine+"/"+fromDate+"/"+toDate)
+    {
+  
+        if(vaccine!="" && fromDate!="" && toDate!="")
+                {
+                    getShedule();
+                }
+    }
+});
+
+//vaccination shedule reminder//
+function getShedule()
+{
+    var basePath= $("#basepath").val();
+        var fromDate = $("#sch-from-date").val()||"";
+        var toDate = $("#sch-to-date").val()||"";
+        var vaccine =  $("#vaccine_reminder").val()||"";
+        var department = $("#dept").val()||"";
+        
+        
+        if(validateSearch())
+        {
+            $(".overlay").show();
+            
+            $.ajax({
+            type: "POST",
+            url: basePath + 'reminder/getVaccineSchedule',
+            dataType: "html",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data:{"fromDate":fromDate,"toDate":toDate,"vaccine":vaccine,"department":department},
+            success: function(result) {
+                $(".overlay").hide();
+                $("#schdl-view").html(result)
+              
+                $('.datepicker').datepicker({
+                         format: 'dd-mm-yyyy',
+                         todayHighlight: true,
+                         uiLibrary: 'bootstrap',
+                         autoclose: true
+                        });
+            },
+            error: function(jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                // alert(msg);  
+            }
+        });
+        }
+      
+}

@@ -257,5 +257,31 @@ $this->db->last_query();
 
         
     }
+
+    public function getEmployeeCountGroupByDept($hospital_id)
+    {
+        $EmployeeCountGroupByDept ="";
+        $where=[
+            "`employee_department`.`isActive`"=>'Y',
+            "department_master.hospital_id"=>$hospital_id
+
+        ];
+        $query = $this->db->select("COUNT(employee_department.`emp_dept_id`) AS no_of_employee,department_master.`department_name` AS name")
+                ->from("employee_department")
+                ->join("department_master","`employee_department`.`dept_id`=`department_master`.`department_id`")
+                ->where($where)
+                ->group_by("employee_department.dept_id")                
+                ->get();
+                //echo $this->db->last_query();exit;
+        if($query->num_rows()>0)
+        {
+        foreach($query->result() as $rows)
+        {    
+            $EmployeeCountGroupByDept[] = $rows;
+        }
+        
+        }
+        return $EmployeeCountGroupByDept;
+    }
     
 }

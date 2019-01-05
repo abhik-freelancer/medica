@@ -743,7 +743,8 @@ echo($contents);
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo(base_url());?>assets/dist/js/demo.js"></script>
 
- <script src="<?php echo(base_url());?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+ <!-- <script src="<?php echo(base_url());?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script> -->
+ <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo(base_url());?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 
@@ -752,9 +753,13 @@ echo($contents);
 <script src="<?php echo base_url(); ?>assets/js/customJs/function.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/customJs/change_department.js"></script>
 
+
+
+	
+
 <script>
   $(function () {
-    $('.medicadatatable').DataTable()
+    //$('.medicadatatable').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,

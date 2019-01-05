@@ -15,16 +15,43 @@ class Reminder extends CI_Controller{
     public function index(){
         if($this->session->user_data['userid']!="" && !empty($this->session->user_data['userid'])){
              header("Access-Control-Allow-Origin: *");
-              $data = [
-                "department"=> $this->department->getDepartmentList($this->session->user_data['hospitalid']),
-                "vaccines"=> $this->vaccine->getVaccineList($this->session->user_data['hospitalid'])
-            ];
+            // echo $this->uri->segment(3);            
+            // echo $this->uri->segment(4);            
+            // echo $this->uri->segment(5);            
+           // echo $this->uri->segment(6);            
+            
+           // exit;
+             if($this->uri->segment(3) == false)
+             {
+                $data = [
+                    "department"=> $this->department->getDepartmentList($this->session->user_data['hospitalid']),
+                    "vaccines"=> $this->vaccine->getVaccineList($this->session->user_data['hospitalid'])
+                ];
+             }else{
+                $data = [
+                    "department"=> $this->department->getDepartmentList($this->session->user_data['hospitalid']),
+                    "vaccines"=> $this->vaccine->getVaccineList($this->session->user_data['hospitalid']),
+                    "department_id"=>$this->uri->segment(3),
+                    "from_date"=>$this->uri->segment(4),
+                    "to_date"=>$this->uri->segment(5)
+                ];                
+             }
+            //  echo "<pre>";
+            //  print_r($data);
+            //  echo "</pre>";
+            //  exit;
+              
         $this->template->set('title', 'Reminder');
         $this->template->load('default_layout', 'contents', 'reminder/reminder_data', $data);
         }else{
             
             redirect('login');
         }
+    }
+
+    public function dashboardData()
+    {
+        //
     }
     
     public function getVaccineSchedule()
@@ -38,7 +65,7 @@ class Reminder extends CI_Controller{
             $department = $this->input->post("department");
             
             $data =[
-                "vaccineschdl"=>$this->remindermodel->getScheduleVaccination($fromDate,$toDate,$vaccine,$department)
+                "vaccineschdl"=>$this->remindermodel->getScheduleVaccination($fromDate,$toDate,$vaccine,$department,$this->session->user_data['hospitalid'])
             ];
             // echo "<pre>";
             // print_r($data);

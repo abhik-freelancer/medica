@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Reminder_model extends CI_Model{
-    public function getScheduleVaccination($fromDate,$toDate,$vaccine_id,$department="")
+    public function getScheduleVaccination($fromDate,$toDate,$vaccine_id,$department="",$hospital_id)
     {
        $deptClause = "";
        $vaccineSchedule =[];
@@ -34,6 +34,7 @@ class Reminder_model extends CI_Model{
                 
                 WHERE 
                 employee_vaccination_detail.schedule_date BETWEEN '".$fromDate."' AND '".$toDate."'
+                AND employee_vaccination_detail.hospital_id=".$hospital_id."
                 
                 AND employee_vaccination_detail.vaccination_id =".$vaccine_id." "
                . " ".$deptClause;

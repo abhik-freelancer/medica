@@ -21,10 +21,22 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-xs-3">
-                  <input type="text" class="form-control datepicker" id="sch-from-date" placeholder="From date">
+                  <input value="<?php
+                  if(isset($from_date))
+                  {
+                    echo $from_date;
+                  }
+                  
+                  ?>" type="text" class="form-control datepicker" id="sch-from-date" placeholder="From date">
                 </div>
                 <div class="col-xs-3">
-                  <input type="text" class="form-control datepicker" placeholder="To date" id="sch-to-date">
+                  <input value="<?php
+                  if(isset($to_date))
+                  {
+                    echo $to_date;
+                  }
+                  
+                  ?>" type="text" class="form-control datepicker" placeholder="To date" id="sch-to-date">
                 </div>
                <div class="col-xs-2">
   <select class="form-control selectpicker"  data-actions-box="true" id="vaccine_reminder" name="vaccine_reminder">
@@ -34,7 +46,15 @@
                               foreach($vaccines as $val){
                             
                               ?>
-                          <option value="<?php echo($val->id); ?>" >
+                          <option value="<?php echo($val->id); ?>" <?php 
+                          if(isset($department_id))
+                          {
+                            if($department_id==$val->id)
+                            {
+                              echo "selected";
+                            }
+                          }
+                          ?> >
                             <?php echo($val->vaccine); ?>
                           </option>
                           <?php } 
@@ -60,7 +80,7 @@
                 </select>
                 </div>
                   <div class="col-xs-1">
-                      <button class="btn btn-sm btn-secondary" id="srch-sch"><i class="fa fa-search-plus"></i></button>
+                      <button class="btn btn-sm btn-secondary" onclick="getShedule()" id="srch-sch"><i class="fa fa-search-plus"></i></button>
                   </div>
               </div>
             </div>
