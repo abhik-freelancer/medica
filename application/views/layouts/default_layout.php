@@ -38,6 +38,8 @@
   
   
   
+
+ 
   
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,6 +50,13 @@
 <link rel="stylesheet" href="<?php echo(base_url());?>assets/css/style.css">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"> 
+
+
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -743,9 +752,13 @@ echo($contents);
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo(base_url());?>assets/dist/js/demo.js"></script>
 
- <!-- <script src="<?php echo(base_url());?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script> -->
- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+ <script src="<?php echo(base_url());?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+ <!-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
 <script src="<?php echo(base_url());?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>   
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 
 
 <script src="<?php echo base_url(); ?>assets/js/bootstrapselect.min.js"></script>
@@ -759,7 +772,14 @@ echo($contents);
 
 <script>
   $(function () {
-    //$('.medicadatatable').DataTable()
+    // $('.medicadatatable').DataTable(
+    //   {
+    //                     dom: 'Bfrtip',
+    //                     buttons: [
+    //                         'excel'
+    //                     ]
+    //                 }
+    // );
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,

@@ -1,3 +1,6 @@
+
+
+
 <section class="content-header">
       <h1>
         Medica
@@ -80,7 +83,7 @@
                 </select>
                 </div>
                   <div class="col-xs-1">
-                      <button class="btn btn-sm btn-secondary" onclick="getShedule()" id="srch-sch"><i class="fa fa-search-plus"></i></button>
+                      <button class="btn btn-sm btn-secondary"  id="srch-sch"><i class="fa fa-search-plus"></i></button>
                   </div>
               </div>
             </div>

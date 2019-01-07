@@ -10,6 +10,7 @@ $(document).ready(function(){
                      autoclose: true
                     });
     
+    
 // employee import
 $("#fupForm").on('submit', function(e){
    
@@ -283,6 +284,12 @@ $(document).on("click",".updt_vaccine",function(){
     //alert(employee_vaccince_schid);
 });
  
+$("#srch-sch").click(function(){
+
+    getShedule();
+});
+
+
 });
 function validateSearch()
 {
@@ -588,15 +595,26 @@ function vaccinationAndEmployee(id)
 }
 
 $(window).on('load', function(){ 
+   
     var basePath= $("#basepath").val();
     var vaccine =  $("#vaccine_reminder").val();
     var fromDate = $("#sch-from-date").val();
     var toDate = $("#sch-to-date").val();
+   
+      $('.medicadatatable').DataTable(
+        {
+            dom: 'Bfrtip',
+            buttons: [
+                'excel'
+            ]
+        }
+    );
     if(window.location.href==basePath+"reminder/index/"+vaccine+"/"+fromDate+"/"+toDate)
     {
   
         if(vaccine!="" && fromDate!="" && toDate!="")
                 {
+                   
                     getShedule();
                 }
     }
@@ -605,7 +623,7 @@ $(window).on('load', function(){
 //vaccination shedule reminder//
 function getShedule()
 {
-    var basePath= $("#basepath").val();
+        var basePath= $("#basepath").val();
         var fromDate = $("#sch-from-date").val()||"";
         var toDate = $("#sch-to-date").val()||"";
         var vaccine =  $("#vaccine_reminder").val()||"";
@@ -623,9 +641,18 @@ function getShedule()
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             data:{"fromDate":fromDate,"toDate":toDate,"vaccine":vaccine,"department":department},
             success: function(result) {
+               
                 $(".overlay").hide();
-                $("#schdl-view").html(result)
-              
+                
+                $("#schdl-view").html(result);
+                $('.medicadatatable').DataTable(
+                    {
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'excel'
+                        ]
+                    }
+                );
                 $('.datepicker').datepicker({
                          format: 'dd-mm-yyyy',
                          todayHighlight: true,
